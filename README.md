@@ -34,3 +34,52 @@ VariacaoPct = ((valor_atual / valor_anterior) - 1) × 100
 A primeira observação de cada grupo não possui uma observação anterior e, portanto, não possui uma variação percentual calculável.
 
 O atributo foi criado para permitir a análise da evolução temporal do consumo de energia elétrica e da produção industrial, contribuindo posteriormente para a investigação da relação entre essas duas fontes de dados.
+
+### Enriquecimento
+
+A produção industrial foi enriquecida com dados de
+consumo de energia elétrica por setor industrial.
+
+A junção utilizou o mês de referência e o código da
+atividade industrial como chaves.
+
+O consumo das cinco regiões foi agregado para
+representar o consumo nacional de cada setor.
+
+Foi utilizada uma junção left, preservando todas
+as observações da produção industrial.
+
+#### Validação da junção
+
+- Linhas na produção: 4.212
+- Linhas no resultado: 4.212
+- Registros com correspondência: 3.744
+- Registros sem correspondência: 468
+
+Os 468 registros sem correspondência pertencem
+às atividades agregadas:
+- Indústria geral: 156 registros.
+- Indústrias extrativas: 156 registros.
+- Indústrias de transformação: 156 registros.
+
+Essas atividades não possuem correspondência direta
+com os setores industriais detalhados do consumo.
+
+A fonte de consumo possui ainda 13 setores que
+não encontram correspondência na produção.
+
+#### Atributo derivado após a junção
+
+DiferencaVariacaoPct:
+
+Representa a diferença entre a variação percentual
+da produção industrial e a variação percentual do
+consumo de energia elétrica do mesmo setor.
+
+O cálculo utiliza observações mensais consecutivas.
+Quando não existe observação no mês anterior,
+a variação não é calculada.
+
+Esse atributo permite investigar se as variações
+da produção industrial acompanham as variações
+do consumo de energia elétrica.
