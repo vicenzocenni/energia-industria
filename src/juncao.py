@@ -1,6 +1,6 @@
 import pandas as pd
 
-from Config import BRONZE, PRATA
+from Config import BRONZE, OURO, PRATA
 
 producao_industria = pd.read_csv(
     PRATA / "producao_industria_2012_2025_tratada.csv",
@@ -153,6 +153,11 @@ resultado["DiferencaVariacaoPct"] = (
     resultado["VariacaoPctProducao"]
     - resultado["VariacaoPctConsumo"]
 )
+
+OURO.mkdir(parents=True, exist_ok=True)
+arquivo_resultado = OURO / "producao_industria_enriquecida.parquet"
+resultado.to_parquet(arquivo_resultado, index=False)
+print("Resultado salvo em:", arquivo_resultado)
 
 print("\nValidação do atributo derivado:")
 
