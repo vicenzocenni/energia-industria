@@ -1,13 +1,8 @@
-from pathlib import Path
 from datetime import datetime
 import json
 import pandas as pd
+from Config import BRONZE, PRATA
 from limpeza import tirar_espacos, chave_texto, variacao_percentual
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-BRONZE = BASE_DIR / "bronze"
-PRATA = BASE_DIR / "prata"
 
 ARQUIVO_CONSUMO = BRONZE / "Dados_abertos_Consumo_Mensal.xlsx"
 ARQUIVO_PRODUCAO = PRATA / "producao_industria_2012_2025_tratada.csv"

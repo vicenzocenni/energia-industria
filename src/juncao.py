@@ -1,15 +1,14 @@
 import pandas as pd
-from pathlib import Path
 
-base_dir = Path(__file__).resolve().parent.parent
+from Config import BRONZE, PRATA
 
 producao_industria = pd.read_csv(
-    base_dir / "prata" / "producao_industria_2012_2025_tratada.csv",
+    PRATA / "producao_industria_2012_2025_tratada.csv",
     encoding="utf-8-sig"
 )
 
 consumo_industrial = pd.read_excel(
-    base_dir / "bronze" / "Dados_abertos_Consumo_Mensal.xlsx",
+    BRONZE / "Dados_abertos_Consumo_Mensal.xlsx",
     sheet_name="SETOR INDUSTRIAL POR RG"
 )
 

@@ -2,9 +2,9 @@ from pathlib import Path
 import pandas as pd
 from data_profiling import ProfileReport
 
+from Config import BRONZE
+
 RELATORIOS = Path("relatorios")
-BRONZE = Path("bronze")
-PRATA = Path("prata")
 PADRAO = "Dados_abertos_Consumo_Mensal.xlsx"
 
 def mais_recente():

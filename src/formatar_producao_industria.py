@@ -1,19 +1,15 @@
 import csv
 import pandas as pd
-from pathlib import Path
+
+from Config import BRONZE, PRATA
 
 
 # ============================================================
 # 1. CAMINHOS DOS ARQUIVOS
 # ============================================================
 
-arquivo_bronze = Path(
-    "bronze/producao_industria_2012_2025.csv"
-)
-
-arquivo_silver = Path(
-    "prata/producao_industria_2012_2025_tratada.csv"
-)
+arquivo_bronze = BRONZE / "producao_industria_2012_2025.csv"
+arquivo_silver = PRATA / "producao_industria_2012_2025_tratada.csv"
 
 # Cria a pasta Silver caso ela ainda não exista
 arquivo_silver.parent.mkdir(
