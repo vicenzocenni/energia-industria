@@ -5,3 +5,5 @@ setuptools<82
 openpyxl
 pyarrow
 duckdb
+dbt-core
+dbt-duckdb

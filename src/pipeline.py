@@ -2,6 +2,7 @@ import logging
 import subprocess
 import sys
 from Config import BASE_DIR
+import subprocess
 
 RAIZ = BASE_DIR
 SRC = RAIZ / "src"
@@ -38,11 +39,19 @@ def etapa_carga():
     import carga
     carga.main()
 
+def etapa_modelagem():
+    subprocess.run(
+        ["dbt", "run"],
+        cwd=RAIZ / "ecox14",
+        check=True,
+    )
+
 
 ETAPAS = [
     ("transformacao", transformar_todas),
     ("enriquecimento", enriquecer),
-    ("carga", etapa_carga)
+    ("carga", etapa_carga),
+    ("modelagem", etapa_modelagem)
 ]
 
 
