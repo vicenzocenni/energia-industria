@@ -83,3 +83,37 @@ a variação não é calculada.
 Esse atributo permite investigar se as variações
 da produção industrial acompanham as variações
 do consumo de energia elétrica.
+
+## Camada Ouro
+
+A Camada Ouro é armazenada no banco DuckDB
+projeto.duckdb, dentro dos esquemas dimensionais
+e de fatos.
+
+### Dimensões
+
+- dim_tempo: uma linha por mês.
+- dim_atividade: uma linha por atividade industrial.
+
+### Tabelas fato
+
+- fato_producao: uma linha por atividade e mês,
+  contendo os indicadores de produção.
+
+- fato_consumo: uma linha por atividade e mês,
+  contendo os indicadores de consumo.
+
+### View
+
+- vw_industria_completa: reúne as informações
+  das duas tabelas fato, preservando registros
+  sem correspondência entre as fontes.
+
+### Integridade
+
+- 156 meses analisados.
+- 40 atividades identificadas.
+- 4.212 registros de produção.
+- 5.742 registros de consumo.
+- Nenhuma duplicata nas chaves das fatos.
+- Nenhum registro órfão.

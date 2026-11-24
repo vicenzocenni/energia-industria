@@ -7,3 +7,4 @@ kaggle.json
 relatorios/*
 .vscode/*
 !prata/proveniencia.jsonl
+*.log

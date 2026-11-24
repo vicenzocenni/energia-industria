@@ -34,10 +34,15 @@ def transformar_todas():
 def enriquecer():
     executar_script("juncao.py")
 
+def etapa_carga():
+    import carga
+    carga.main()
+
 
 ETAPAS = [
     ("transformacao", transformar_todas),
-    ("enriquecimento", enriquecer)
+    ("enriquecimento", enriquecer),
+    ("carga", etapa_carga)
 ]
 
 
