@@ -1,0 +1,105 @@
+version: 2
+
+models:
+  - name: fato_industria_consumo
+    description: >
+      Tabela fato que integra dados mensais de produção
+      industrial e consumo de energia elétrica por atividade
+      industrial. Permite analisar a relação entre a evolução
+      da produção e o consumo de energia.
+
+    columns:
+      - name: Data
+        description: Data de referência mensal do registro.
+        data_tests:
+          - not_null
+
+      - name: Ano
+        description: Ano de referência da observação.
+
+      - name: Mes
+        description: Mês de referência da observação.
+
+      - name: Atividade
+        description: Descrição da atividade industrial.
+        data_tests:
+          - not_null
+
+      - name: ChaveAtividade
+        description: >
+          Identificador da atividade industrial utilizado
+          na integração. Pode estar vazio para categorias
+          agregadas sem correspondência na integração.
+
+      - name: Valor
+        description: Valor do indicador de produção industrial.
+
+      - name: VariacaoPctProducao
+        description: Variação percentual da produção industrial.
+
+      - name: Consumo
+        description: Consumo de energia elétrica associado à atividade.
+
+      - name: VariacaoPctConsumo
+        description: Variação percentual do consumo de energia elétrica.
+
+      - name: DiferencaVariacaoPct
+        description: >
+          Diferença calculada entre as variações percentuais
+          da produção e do consumo.
+
+  - name: vw_industria_consumo
+    description: >
+      View de consulta que apresenta os dados da tabela
+      fato_industria_consumo e acrescenta uma classificação
+      para identificar registros com ou sem correspondência
+      de consumo de energia elétrica.
+
+    columns:
+      - name: Data
+        description: Data de referência mensal do registro.
+
+      - name: Ano
+        description: Ano de referência da observação.
+
+      - name: Mes
+        description: Mês de referência da observação.
+
+      - name: Atividade
+        description: Descrição da atividade industrial.
+
+      - name: ChaveAtividade
+        description: >
+          Identificador da atividade industrial utilizado
+          na integração.
+
+      - name: Valor
+        description: Valor do indicador de produção industrial.
+
+      - name: VariacaoPctProducao
+        description: Variação percentual da produção industrial.
+
+      - name: Consumo
+        description: Consumo de energia elétrica associado à atividade.
+
+      - name: VariacaoPctConsumo
+        description: Variação percentual do consumo de energia elétrica.
+
+      - name: DiferencaVariacaoPct
+        description: >
+          Diferença calculada entre as variações percentuais
+          da produção e do consumo.
+
+      - name: status_correspondencia_consumo
+        description: >
+          Classificação da correspondência entre produção
+          industrial e consumo de energia. Assume
+          com_correspondencia quando Consumo não é nulo
+          e sem_correspondencia quando Consumo é nulo.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - com_correspondencia
+                  - sem_correspondencia

@@ -8,3 +8,4 @@ relatorios/*
 .vscode/*
 !prata/proveniencia.jsonl
 *.log
+duckdb.exe
