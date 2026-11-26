@@ -2,7 +2,6 @@ import logging
 import subprocess
 import sys
 from Config import BASE_DIR
-import subprocess
 
 RAIZ = BASE_DIR
 SRC = RAIZ / "src"
@@ -29,6 +28,7 @@ def executar_script(nome):
 
 def transformar_todas():
     executar_script("formatar_producao_industria.py")
+    executar_script("formatar_consumo_industrial.py")
     executar_script("transformar.py")
 
 

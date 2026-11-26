@@ -1,3 +1,131 @@
+## Executar o projeto em um computador novo
+
+Este passo a passo executa o pipeline completo, constrói as camadas de dados e
+abre o dashboard. Os arquivos-fonte necessários já estão versionados na pasta
+`bronze/`.
+
+### 1. Instalar os pré-requisitos
+
+Instale o Git e o Python 3.13. No Windows, confirme que o comando `py` está
+disponível no PowerShell:
+
+```powershell
+py --version
+git --version
+```
+
+### 2. Baixar o projeto e instalar as dependências
+
+Clone o repositório e entre na pasta criada:
+
+```powershell
+git clone https://github.com/vicenzineo/gastos_jundiai.git
+cd gastos_jundiai
+```
+
+Crie e ative um ambiente virtual e instale as dependências Python:
+
+```powershell
+py -3.13 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Se o PowerShell bloquear a ativação do ambiente, permita scripts somente nesta
+sessão e ative-o novamente:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+### 3. Configurar o perfil do dbt
+
+O dbt precisa de um perfil local, fora do repositório. Crie a pasta de
+configuração e abra o arquivo:
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\.dbt"
+notepad "$HOME\.dbt\profiles.yml"
+```
+
+Cole o conteúdo abaixo em `profiles.yml`. Para obter o caminho absoluto do
+clone, execute este comando na raiz do repositório:
+
+```powershell
+(Resolve-Path .).Path -replace '\\', '/'
+```
+
+Use o resultado no caminho do banco, acrescentando
+`/ouro/projeto.duckdb` (use barras `/`):
+
+```yaml
+ecox14:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "C:/CAMINHO/ABSOLUTO/gastos_jundiai/ouro/projeto.duckdb"
+      schema: ouro
+      threads: 1
+```
+
+Salve o arquivo. O caminho deve apontar para `ouro/projeto.duckdb` dentro deste
+clone, e o nome do perfil `ecox14` e o schema `ouro` devem permanecer como
+estão. Esse perfil é específico do computador e não deve ser commitado.
+
+Com o ambiente virtual ativado e na raiz do repositório, valide a configuração:
+
+```powershell
+dbt debug --project-dir ecox14
+```
+
+### 4. Executar o pipeline
+
+Ainda na raiz do repositório e com o ambiente virtual ativado, execute:
+
+```powershell
+python src\pipeline.py
+```
+
+O pipeline formata as fontes, transforma e enriquece os dados, carrega as
+tabelas no DuckDB e executa os modelos dbt. A execução termina com erro se
+alguma etapa falhar; consulte a mensagem no terminal ou `pipeline.log`.
+
+### 5. Abrir o dashboard
+
+Depois que o pipeline terminar com sucesso, inicie o Streamlit:
+
+```powershell
+python -m streamlit run dashboard\painel.py
+```
+
+O navegador abrirá o dashboard. Se não abrir automaticamente, acesse
+`http://localhost:8501`. O painel consulta `ouro/projeto.duckdb`, portanto
+execute-o a partir deste clone, que deve ser o mesmo usado para configurar o
+perfil do dbt.
+
+### macOS e Linux
+
+Os comandos equivalentes para criar e ativar o ambiente virtual são:
+
+```bash
+python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+Use os mesmos passos para configurar `~/.dbt/profiles.yml`, apontando `path`
+para o caminho absoluto `ouro/projeto.duckdb`, e execute na raiz do repositório:
+
+```bash
+dbt debug --project-dir ecox14
+python src/pipeline.py
+python -m streamlit run dashboard/painel.py
+```
+
 Alertas da producao da industria:
 Local tem constante Brasil em todos, pode ser descartada.
 Atividade é distribuída uniformemente
